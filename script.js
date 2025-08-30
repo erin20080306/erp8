@@ -74,7 +74,7 @@ sheetSel.innerHTML = '<option value="">載入失敗</option>';
 }
 }
 
-// ⭐ 輸入姓名 → 自動帶倉別
+// ⭐ 輸入姓名 → 自動帶倉別 + 自動載入資料表
 async function autoPickByName() {
 const name = document.getElementById("name").value.trim();
 const hint = document.getElementById("nameHint");
@@ -83,7 +83,7 @@ if (!name) return;
 const cache = loadCache();
 if (cache[name]) {
 document.getElementById("warehouse").value = cache[name].warehouse;
-await loadSheets(cache[name].warehouse, cache[name].sheet);
+await loadSheets(cache[name].warehouse, cache[name].sheet); // ✅ 自動帶資料表
 hint.textContent = `已自動帶入倉別：${cache[name].warehouse}`;
 return;
 }
@@ -94,10 +94,11 @@ try {
 const sheets = await getSheets(wh);
 const candidate = sheets.find(s => SHEET_KEYWORDS.some(k => s.includes(k))) || sheets[0];
 if (!candidate) continue;
+
 const ok = await testSheetHasName(wh, candidate, name);
 if (ok) {
 document.getElementById("warehouse").value = wh;
-await loadSheets(wh, candidate);
+await loadSheets(wh, candidate); // ✅ 自動載入資料表 & 預選
 cache[name] = { warehouse: wh, sheet: candidate };
 saveCache(cache);
 hint.textContent = `已自動帶入倉別：${wh}`;
