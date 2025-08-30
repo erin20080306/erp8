@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+body {
+font-family: 'Noto Sans TC', sans-serif;
+margin: 0;
+padding: 0;
+background: url('https://cdn.pixabay.com/photo/2017/10/13/01/59/xizhi-2846636_1280.jpg') no-repeat center center fixed;
+background-size: cover;
+color: #333;
+}
+
+.header {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 40px;
+}
+
+.logo {
+font-size: 70px;
+font-weight: 900;
+letter-spacing: -10px;
+line-height: 1;
+text-align: center;
+}
+
+.logo span:nth-child(1) { color: #e60012; }
+.logo span:nth-child(2) { color: #ffa500; }
+.logo span:nth-child(3) { color: #f6ff00; }
+.logo span:nth-child(4) { color: #28cd41; }
+.logo span:nth-child(5) { color: #1ca6ff; }
+.logo span:nth-child(6) { color: #5f45ff; }
+.logo span:nth-child(7) { color: #c63aff; }
+
+.title {
+font-size: 22px;
+font-weight: 600;
+margin-top: 5px;
+text-align: center;
+}
+
+.box {
+background: rgba(255, 255, 255, 0.40);
+padding: 24px;
+border-radius: 12px;
+max-width: 480px;
+margin: 30px auto;
+box-shadow: 0 0 12px rgba(0,0,0,0.15);
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.box label {
+font-weight: 600;
+}
+
+.box input,
+.box select {
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+.box button {
+background-color: #4dc2ff;
+color: white;
+font-size: 18px;
+padding: 10px;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+
+.box button:hover {
+background-color: #34aadd;
+}
+
+
