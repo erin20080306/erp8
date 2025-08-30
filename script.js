@@ -78,17 +78,16 @@ sheetSel.innerHTML = '<option value="">載入失敗</option>';
 async function autoPickByName() {
 const name = document.getElementById("name").value.trim();
 const hint = document.getElementById("nameHint");
-if (!name) return;
+if (!name) return false;
 
 const cache = loadCache();
 if (cache[name]) {
 document.getElementById("warehouse").value = cache[name].warehouse;
-await loadSheets(cache[name].warehouse, cache[name].sheet); // ✅ 自動帶資料表
+await loadSheets(cache[name].warehouse, cache[name].sheet);
 hint.textContent = `已自動帶入倉別：${cache[name].warehouse}`;
-return;
+return true;
 }
 
-// 沒快取 → 順序掃倉別
 for (const wh of WAREHOUSE_PRIORITY) {
 try {
 const sheets = await getSheets(wh);
@@ -98,15 +97,16 @@ if (!candidate) continue;
 const ok = await testSheetHasName(wh, candidate, name);
 if (ok) {
 document.getElementById("warehouse").value = wh;
-await loadSheets(wh, candidate); // ✅ 自動載入資料表 & 預選
+await loadSheets(wh, candidate);
 cache[name] = { warehouse: wh, sheet: candidate };
 saveCache(cache);
 hint.textContent = `已自動帶入倉別：${wh}`;
-return;
+return true;
 }
 } catch (e) { console.warn("檢查失敗", wh, e); }
 }
 hint.textContent = "❌ 沒找到對應倉別，請檢查姓名是否正確";
+return false;
 }
 
 // 綁定事件：姓名輸入完就觸發
@@ -116,15 +116,21 @@ if (e.key === "Enter") autoPickByName();
 });
 
 // 查詢按鈕
-document.getElementById("queryBtn").addEventListener("click", function () {
-const warehouse = document.getElementById("warehouse").value;
-const sheet = document.getElementById("sheet").value;
+document.getElementById("queryBtn").addEventListener("click", async function () {
 const name = document.getElementById("name").value.trim();
+let warehouse = document.getElementById("warehouse").value;
+let sheet = document.getElementById("sheet").value;
 const phone = document.getElementById("phone").value.trim();
 
-if (!warehouse || !sheet || !name) {
-alert("請輸入姓名，系統會自動帶入倉別與資料表！");
+// ⭐ 如果倉別還沒帶出 → 先跑一次 autoPickByName
+if (!warehouse || !sheet) {
+const ok = await autoPickByName();
+warehouse = document.getElementById("warehouse").value;
+sheet = document.getElementById("sheet").value;
+if (!ok || !warehouse || !sheet) {
+alert("請輸入姓名，系統無法找到對應倉別/資料表！");
 return;
+}
 }
 
 let url = `${scriptURLs[warehouse]}?sheet=${encodeURIComponent(sheet)}&name=${encodeURIComponent(name)}&from=glitch`;
