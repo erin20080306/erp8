@@ -22,13 +22,9 @@
 
 <!-- ✅ 出勤查詢功能 -->
 <div class="box">
-<label for="name">姓名</label>
-<input type="text" id="name" placeholder="請輸入姓名（必填）" />
-<small id="nameHint" style="opacity:.8">輸入姓名後，系統會自動帶入倉別與資料表</small>
-
 <label for="warehouse">倉別</label>
-<select id="warehouse" disabled>
-<option value="">請先輸入姓名...</option>
+<select id="warehouse">
+<option value="">請選擇倉別</option>
 <option value="TAO1">TAO1</option>
 <option value="TAO3">TAO3</option>
 <option value="TAO4">TAO4</option>
@@ -39,9 +35,12 @@
 </select>
 
 <label for="sheet">資料表</label>
-<select id="sheet" disabled>
-<option value="">請先輸入姓名...</option>
+<select id="sheet">
+<option value="">請先選擇倉別</option>
 </select>
+
+<label for="name">姓名</label>
+<input type="text" id="name" placeholder="請輸入姓名（必填）" />
 
 <label for="phone">生日（選填）</label>
 <input type="text" id="phone" placeholder="例如：810105" />
@@ -49,24 +48,6 @@
 <button id="queryBtn">查詢</button>
 </div>
 
-<!-- ✅ 開啟試算表功能區 -->
-<div class="box">
-<h3>📊 開啟倉別對應的 Google 試算表</h3>
-<label for="spreadsheetWarehouse">請選擇倉別</label>
-<select id="spreadsheetWarehouse">
-<option value="">請選擇倉別</option>
-<option value="TAO1">TAO1</option>
-<option value="TAO3">TAO3</option>
-<option value="TAO4">TAO4</option>
-<option value="TAO5">TAO5</option>
-<option value="TAO6">TAO6</option>
-<option value="TAO7">TAO7</option>
-<option value="TAO10">TAO10</option>
-</select>
-<button id="openSheetBtn">開啟試算表</button>
-</div>
-
 <script src="script.js"></script>
 </body>
 </html>
-
